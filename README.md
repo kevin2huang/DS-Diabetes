@@ -71,7 +71,7 @@ The data dictionary for the data set is as follows:<br>
 | mass | Body Mass Index | Num |  |
 | pedi | Pedigree | Num |  |
 | age | Person's age | Num |   |
-| class | Product Hierarchy Level 20 Code | Char | 1 = Yes, 0 = No |
+| class | Whether or not this person has diabetes | Num | 1 = Yes, 0 = No |
 
 
 ### 3.5 Greet the data
