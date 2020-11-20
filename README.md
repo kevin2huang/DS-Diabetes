@@ -507,7 +507,7 @@ correlation_heatmap(diabetes_data)
 
 plt.show()
 ```
-<img src="/images/heatmap.png" title="Pearson Correlation of Features" width="500" height="auto"/><br>
+<img src="/images/heatmap.png" title="Pearson Correlation of Features" width="700" height="auto"/><br>
 
 ### 5.8 Pair plot
 ```python
