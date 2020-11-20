@@ -236,9 +236,285 @@ This section explores the distribution of each variable.
 
 ### 5.1 preg (Pregnancies)
 
+```python
+print('preg (Pregnancies):\n', diabetes_data.preg.value_counts(sort=False))
+
+# plot the distribution
+plt.title("Histogram of number of entries per pregnancy count", fontsize=20)
+plt.xlabel("Pregnancies", fontsize=16)  
+plt.hist(diabetes_data.preg)
+plt.show()
+```
+<img src="/images/preg_hist.png" title="Histogram of number of entries per pregnancy count" width="400" height="auto"/><br>
+```
+preg (Pregnancies):
+ 0     111
+1     135
+2     103
+3      75
+4      68
+5      57
+6      50
+7      45
+8      38
+9      28
+10     24
+11     11
+12      9
+13     10
+14      2
+15      1
+17      1
+Name: preg, dtype: int64
+```
+
+### 5.2 plas (Plasma Glucose)
+```python
+print('plas (Plasma Glucose):\n', diabetes_data.plas.value_counts(sort=False))
+
+# plot the distribution
+plt.title("Histogram of number of entries per plasma glucose score", fontsize=20)
+plt.xlabel("Plasma Glucose", fontsize=16)  
+plt.hist(diabetes_data.plas)
+plt.show()
+```
+<img src="/images/plas_hist.png" title="Histogram of number of entries per plasma glucose score" width="400" height="auto"/><br>
+```
+plas (Plasma Glucose):
+ 0      5
+44     1
+56     1
+57     2
+61     1
+      ..
+195    2
+196    3
+197    4
+198    1
+199    1
+Name: plas, Length: 136, dtype: int64
+```
+
+### 5.3 skin
+```python
+print('skin (Skin Thickness):\n', diabetes_data.skin.value_counts(sort=False))
+
+# plot the distribution
+plt.title("Histogram of number of entries per skin thickness score", fontsize=20)
+plt.xlabel("Skin Thickness", fontsize=16)  
+plt.hist(diabetes_data.skin)
+plt.show()
+```
+<img src="/images/skin_hist.png" title="Histogram of number of entries per skin thickness score" width="400" height="auto"/><br>
+```
+skin (Skin Thickness):
+0     227
+7       2
+8       2
+10      5
+11      6
+12      7
+13     11
+14      6
+15     14
+16      6
+17     14
+18     20
+19     18
+20     13
+21     10
+22     16
+23     22
+24     12
+25     16
+26     16
+27     23
+28     20
+29     17
+30     27
+31     19
+32     31
+33     20
+34      8
+35     15
+36     14
+37     16
+38      7
+39     18
+40     16
+41     15
+42     11
+43      6
+44      5
+45      6
+46      8
+47      4
+48      4
+49      3
+50      3
+51      1
+52      2
+54      2
+56      1
+60      1
+63      1
+99      1
+Name: skin, dtype: int64
+```
+
+### 5.4 mass
+```python
+print('mass (Body Mass Index):\n', diabetes_data.mass.value_counts(sort=False))
+
+# plot the distribution
+plt.title("Histogram of number of entries per body mass index score", fontsize=20)
+plt.xlabel("Body Mass Index", fontsize=16)  
+plt.hist(diabetes_data.mass)
+plt.show()
+```
+<img src="/images/mass_hist.png" title="Histogram of number of entries per body mass index score" width="400" height="auto"/><br>
+```
+mass (Body Mass Index):
+31.0     2
+30.5     7
+0.0     11
+38.0     2
+30.0     7
+        ..
+34.6     5
+26.9     1
+23.4     1
+31.2    12
+49.3     1
+Name: mass, Length: 248, dtype: int64
+```
+
+### 5.5 pedi
+```python
+print('pedi (Pedigree):\n', diabetes_data.pedi.value_counts(sort=False))
+
+# plot the distribution
+plt.title("Histogram of number of entries per pedigree score", fontsize=20)
+plt.xlabel("Pedigree", fontsize=16)  
+plt.hist(diabetes_data.pedi)
+plt.show()
+```
+<img src="/images/pedi_hist.png" title="Histogram of number of entries per pedigree score" width="400" height="auto"/><br>
+```
+pedi (Pedigree):
+0.375    1
+0.875    2
+0.381    1
+0.181    1
+0.514    2
+        ..
+0.231    2
+0.893    1
+0.286    2
+0.084    1
+0.362    1
+Name: pedi, Length: 517, dtype: int64
+```
+
+### 5.6 age
+```python
+print('age:\n', diabetes_data.age.value_counts(sort=False))
+
+# plot the distribution
+plt.title("Histogram of number of entries per age", fontsize=20)
+plt.xlabel("Age", fontsize=16)  
+plt.hist(diabetes_data.age)
+plt.show()
+```
+<img src="/images/age_hist.png" title="Histogram of number of entries per age" width="400" height="auto"/><br>
+```
+age:
+21    63
+22    72
+23    38
+24    46
+25    48
+26    33
+27    32
+28    35
+29    29
+30    21
+31    24
+32    16
+33    17
+34    14
+35    10
+36    16
+37    19
+38    16
+39    12
+40    13
+41    22
+42    18
+43    13
+44     8
+45    15
+46    13
+47     6
+48     5
+49     5
+50     8
+51     8
+52     8
+53     5
+54     6
+55     4
+56     3
+57     5
+58     7
+59     3
+60     5
+61     2
+62     4
+63     4
+64     1
+65     3
+66     4
+67     3
+68     1
+69     2
+70     1
+72     1
+81     1
+```
 
 
-### 5.19 Correlation Heatmap
+### 5.7 Correlation heatmap
+```python
+def correlation_heatmap(df):
+    _ , ax = plt.subplots(figsize =(14, 12))
+    colormap = sns.diverging_palette(220, 10, as_cmap = True)
+    
+    _ = sns.heatmap(
+        df.corr(), 
+        cmap = colormap,
+        square=True, 
+        cbar_kws={'shrink':.9 }, 
+        ax=ax,
+        annot=True, 
+        linewidths=0.1,vmax=1.0, linecolor='white',
+        annot_kws={'fontsize':10 }
+    )
+    
+    plt.title('Pearson Correlation of Features', y=1.05, size=15)
+
+correlation_heatmap(diabetes_data)
+
+plt.show()
+```
+<img src="/images/heatmap.png" title="Pearson Correlation of Features" width="500" height="auto"/><br>
+
+### 5.8 Pair plot
+```python
+sns.pairplot(diabetes_data, hue = 'class')
+plt.show()
+```
+<img src="/images/pairplot.png" title="Pairplot of Features" width="auto" height="auto"/><br>
 
 
 ## 6) Feature Engineering
