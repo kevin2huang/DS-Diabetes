@@ -61,17 +61,17 @@ from sklearn.metrics import accuracy_score, mean_absolute_error, r2_score
 
 ### 3.3 Data dictionary
 The data dictionary for the data set is as follows:<br>
-| Variable | Definition | Type | Key/Sample values|
+| Variable | Definition | Type | Key|
 | :-------: | :---------:| :-------:| :-------:|
-| preg | Pregnancies | Num |  |
-| plas | Plasma Glucose | Num |  |
-| pres | Blood Pressure | Num |  |
-| skin | Skin Thickness | Num |  |
-| test | Insulin Test | Num |  |
-| mass | Body Mass Index | Num |  |
-| pedi | Pedigree | Num |  |
-| age | Age | Num |   |
-| class | Whether or not this person has diabetes | Num | 1 = Yes, 0 = No |
+| preg | Pregnancies | Numerical |  |
+| plas | Plasma Glucose | Numerical |  |
+| pres | Blood Pressure | Numerical |  |
+| skin | Skin Thickness | Numerical |  |
+| test | Insulin Test | Numerical |  |
+| mass | Body Mass Index | Numerical |  |
+| pedi | Pedigree | Numerical |  |
+| age | Age | Numerical |   |
+| class | Whether or not this person has diabetes | Categorical | 1 = Yes, 0 = No |
 
 
 ### 3.5 Greet the data
@@ -483,8 +483,25 @@ age:
 81     1
 ```
 
+### 5.7 class
+```python
+print('class:\n', diabetes_data['class'].value_counts(sort=False))
 
-### 5.7 Correlation heatmap
+# plot the distribution
+plt.title("Number of positives vs negatives", fontsize=20) 
+ax = sns.barplot(diabetes_data['class'].value_counts().index, diabetes_data['class'].value_counts())
+ax.set(xlabel='Class', ylabel='# of entries')
+plt.show()
+```
+<img src="/images/class_bar.png" title="Number of positives vs negatives" width="400" height="auto"/><br>
+```
+class:
+0    500
+1    268
+Name: class, dtype: int64
+```
+
+### 5.8 Correlation heatmap
 ```python
 def correlation_heatmap(df):
     _ , ax = plt.subplots(figsize =(14, 12))
@@ -509,7 +526,7 @@ plt.show()
 ```
 <img src="/images/heatmap.png" title="Pearson Correlation of Features" width="700" height="auto"/><br>
 
-### 5.8 Pair plot
+### 5.9 Pair plot
 ```python
 sns.pairplot(diabetes_data, hue = 'class')
 plt.show()
@@ -517,7 +534,7 @@ plt.show()
 <img src="/images/pairplot.png" title="Pairplot of Features" width="auto" height="auto"/><br>
 
 
-### 5.9 Pivot Table
+### 5.10 Pivot Table
 ```python
 pivot_table1 = pd.pivot_table(diabetes_data, index = 'class', values = ['preg', 'plas', 'pres', 'skin'])
 print(pivot_table1)
