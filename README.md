@@ -67,10 +67,10 @@ The data dictionary for the data set is as follows:<br>
 | plas | Plasma Glucose | Num |  |
 | pres | Blood Pressure | Num |  |
 | skin | Skin Thickness | Num |  |
-| test | Insulin test | Num |  |
+| test | Insulin Test | Num |  |
 | mass | Body Mass Index | Num |  |
 | pedi | Pedigree | Num |  |
-| age | Person's age | Num |   |
+| age | Age | Num |   |
 | class | Whether or not this person has diabetes | Num | 1 = Yes, 0 = No |
 
 
@@ -86,7 +86,12 @@ diabetes_data = pd.read_csv("Data set/diabetes.csv", encoding= 'unicode_escape')
 print(diabetes_data.head())
 ```
 ```
-
+   preg  plas  pres  skin  test  mass   pedi  age  class
+0     6   148    72    35     0  33.6  0.627   50      1
+1     1    85    66    29     0  26.6  0.351   31      0
+2     8   183    64     0     0  23.3  0.672   32      1
+3     1    89    66    23    94  28.1  0.167   21      0
+4     0   137    40    35   168  43.1  2.288   33      1
 ```
 **Date column types and count**
 ```python
@@ -94,9 +99,23 @@ print(diabetes_data.head())
 print(diabetes_data.info())
 ```
 ```
-
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 768 entries, 0 to 767
+Data columns (total 9 columns):
+ #   Column  Non-Null Count  Dtype  
+---  ------  --------------  -----  
+ 0   preg    768 non-null    int64  
+ 1   plas    768 non-null    int64  
+ 2   pres    768 non-null    int64  
+ 3   skin    768 non-null    int64  
+ 4   test    768 non-null    int64  
+ 5   mass    768 non-null    float64
+ 6   pedi    768 non-null    float64
+ 7   age     768 non-null    int64  
+ 8   class   768 non-null    int64  
+dtypes: float64(2), int64(7)
 ```
-
+There are no null values.
 
 **Summarize the central tendency, dispersion and shape**
 ```python
@@ -105,20 +124,32 @@ with pd.option_context('display.max_columns', len(diabetes_data.columns)):
     print(diabetes_data.describe(include='all'))
 ```
 ```
+             preg        plas        pres        skin        test        mass  \
+count  768.000000  768.000000  768.000000  768.000000  768.000000  768.000000   
+mean     3.845052  120.894531   69.105469   20.536458   79.799479   31.992578   
+std      3.369578   31.972618   19.355807   15.952218  115.244002    7.884160   
+min      0.000000    0.000000    0.000000    0.000000    0.000000    0.000000   
+25%      1.000000   99.000000   62.000000    0.000000    0.000000   27.300000   
+50%      3.000000  117.000000   72.000000   23.000000   30.500000   32.000000   
+75%      6.000000  140.250000   80.000000   32.000000  127.250000   36.600000   
+max     17.000000  199.000000  122.000000   99.000000  846.000000   67.100000   
 
+             pedi         age       class  
+count  768.000000  768.000000  768.000000  
+mean     0.471876   33.240885    0.348958  
+std      0.331329   11.760232    0.476951  
+min      0.078000   21.000000    0.000000  
+25%      0.243750   24.000000    0.000000  
+50%      0.372500   29.000000    0.000000  
+75%      0.626250   41.000000    1.000000  
+max      2.420000   81.000000    1.000000  
 ```
 
 ## 4) Data Cleaning
-The data is cleaned in 2 steps:
-1. Correcting outliers
-2. Completing null or missing data
-3. Create new features
-4. Convert object data types
-5. Output cleaned data into new CSV
 
 ### 4.1 Correcting outliers
 
-#### Helper methods
+#### 4.1.0 Helper methods
 These 2 methods were created to find the outliers and remove them from a column.<br>
 **IQR method**
 ```python
@@ -150,34 +181,61 @@ def remove_outliers_z_score(df):
 	return dataf[(z_scores  < 3).all(axis=1)]
 ```
 
-#### 4.1.1 QUANTITY
-
-
-### 4.2 Completing null or missing data
-
-
-
-#### 4.2.5 Drop all null rows
-
-
-### 4.3 Create new features
-
-
-### 4.4 Convert object data types
-
-
-### 4.5 Output cleaned data into new CSV
-
+#### 4.1.1 preg (Pregnancies)
 ```python
-diabetes_data.to_csv('Data set/diabetes_data_cleaned.csv',index = False)
+sns.boxplot(x=diabetes_data['preg'])
+plt.show()
 ```
+<img src="/images/preg_boxplot.png" title="Pregnancies box plot" width="600" height="auto"/><br>
+
+#### 4.1.2 plas (Plasma Glucose)
+```python
+sns.boxplot(x=diabetes_data['plas'])
+plt.show()
+```
+<img src="/images/plas_boxplot.png" title="Plasma Glucose box plot" width="600" height="auto"/><br>
+
+#### 4.1.3 skin (Skin Thickness)
+```python
+sns.boxplot(x=diabetes_data['skin'])
+plt.show()
+```
+<img src="/images/skin_boxplot.png" title="Skin Thickness box plot" width="600" height="auto"/><br>
+
+#### 4.1.4 test (Insulin Test)
+```python
+sns.boxplot(x=diabetes_data['test'])
+plt.show()
+```
+<img src="/images/test_boxplot.png" title="Insulin Test box plot" width="600" height="auto"/><br>
+
+#### 4.1.5 mass (Body Mass Index)
+```python
+sns.boxplot(x=diabetes_data['mass'])
+plt.show()
+```
+<img src="/images/mass_boxplot.png" title="Body Mass Index box plot" width="600" height="auto"/><br>
+
+#### 4.1.6 pedi (Pedigree)
+```python
+sns.boxplot(x=diabetes_data['pedi'])
+plt.show()
+```
+<img src="/images/pedi_boxplot.png" title="Pedigree box plot" width="600" height="auto"/><br>
+
+#### 4.1.7 age
+```python
+sns.boxplot(x=diabetes_data['age'])
+plt.show()
+```
+<img src="/images/age_boxplot.png" title="Age box plot" width="600" height="auto"/><br>
+
 
 ## 5) Data Exploration
 This section explores the distribution of each variable.
-```python
-# read data set
-diabetes_data = pd.read_csv("Data set/diabetes_data_cleaned.csv", encoding= 'unicode_escape')
-```
+
+### 5.1 preg (Pregnancies)
+
 
 
 ### 5.19 Correlation Heatmap
