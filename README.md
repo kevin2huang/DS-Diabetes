@@ -186,49 +186,49 @@ def remove_outliers_z_score(df):
 sns.boxplot(x=diabetes_data['preg'])
 plt.show()
 ```
-<img src="/images/preg_boxplot.png" title="Pregnancies box plot" width="600" height="auto"/><br>
+<img src="/images/preg_boxplot.png" title="Pregnancies box plot" width="400" height="auto"/><br>
 
 #### 4.1.2 plas (Plasma Glucose)
 ```python
 sns.boxplot(x=diabetes_data['plas'])
 plt.show()
 ```
-<img src="/images/plas_boxplot.png" title="Plasma Glucose box plot" width="600" height="auto"/><br>
+<img src="/images/plas_boxplot.png" title="Plasma Glucose box plot" width="400" height="auto"/><br>
 
 #### 4.1.3 skin (Skin Thickness)
 ```python
 sns.boxplot(x=diabetes_data['skin'])
 plt.show()
 ```
-<img src="/images/skin_boxplot.png" title="Skin Thickness box plot" width="600" height="auto"/><br>
+<img src="/images/skin_boxplot.png" title="Skin Thickness box plot" width="400" height="auto"/><br>
 
 #### 4.1.4 test (Insulin Test)
 ```python
 sns.boxplot(x=diabetes_data['test'])
 plt.show()
 ```
-<img src="/images/test_boxplot.png" title="Insulin Test box plot" width="600" height="auto"/><br>
+<img src="/images/test_boxplot.png" title="Insulin Test box plot" width="400" height="auto"/><br>
 
 #### 4.1.5 mass (Body Mass Index)
 ```python
 sns.boxplot(x=diabetes_data['mass'])
 plt.show()
 ```
-<img src="/images/mass_boxplot.png" title="Body Mass Index box plot" width="600" height="auto"/><br>
+<img src="/images/mass_boxplot.png" title="Body Mass Index box plot" width="400" height="auto"/><br>
 
 #### 4.1.6 pedi (Pedigree)
 ```python
 sns.boxplot(x=diabetes_data['pedi'])
 plt.show()
 ```
-<img src="/images/pedi_boxplot.png" title="Pedigree box plot" width="600" height="auto"/><br>
+<img src="/images/pedi_boxplot.png" title="Pedigree box plot" width="400" height="auto"/><br>
 
 #### 4.1.7 age
 ```python
 sns.boxplot(x=diabetes_data['age'])
 plt.show()
 ```
-<img src="/images/age_boxplot.png" title="Age box plot" width="600" height="auto"/><br>
+<img src="/images/age_boxplot.png" title="Age box plot" width="400" height="auto"/><br>
 
 
 ## 5) Data Exploration
