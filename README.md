@@ -12,6 +12,7 @@
 5) [Data Exploration](#5-data-exploration)<br>
 6) [Feature Engineering](#6-feature-engineering)<br>
 7) [Model Building](#7-model-building)<br>
+8) [Hyperparameter Tuning](#8-hyperparameter-tuning)<br>
 
 ## 1) Define the Problem
 The mandate is to predict if a person has diabetes or not.
@@ -28,10 +29,6 @@ import numpy as np
 import pandas as pd
 import matplotlib
 import sklearn
-import itertools
-import copy
-import csv
-import openpyxl
 ```
 
 ### 3.2 Load Data Modeling Libraries
@@ -278,7 +275,7 @@ plt.xlabel("Plasma Glucose", fontsize=16)
 plt.hist(diabetes_data.plas)
 plt.show()
 ```
-<img src="/images/plas_hist.png" title="Histogram of number of entries per plasma glucose score" width="400" height="auto"/><br>
+<img src="/images/plas_hist.png" title="Histogram of number of entries per plasma glucose score" width="500" height="auto"/><br>
 ```
 plas (Plasma Glucose):
  0      5
@@ -305,7 +302,7 @@ plt.xlabel("Skin Thickness", fontsize=16)
 plt.hist(diabetes_data.skin)
 plt.show()
 ```
-<img src="/images/skin_hist.png" title="Histogram of number of entries per skin thickness score" width="400" height="auto"/><br>
+<img src="/images/skin_hist.png" title="Histogram of number of entries per skin thickness score" width="500" height="auto"/><br>
 ```
 skin (Skin Thickness):
 0     227
@@ -372,7 +369,7 @@ plt.xlabel("Body Mass Index", fontsize=16)
 plt.hist(diabetes_data.mass)
 plt.show()
 ```
-<img src="/images/mass_hist.png" title="Histogram of number of entries per body mass index score" width="400" height="auto"/><br>
+<img src="/images/mass_hist.png" title="Histogram of number of entries per body mass index score" width="500" height="auto"/><br>
 ```
 mass (Body Mass Index):
 31.0     2
@@ -399,7 +396,7 @@ plt.xlabel("Pedigree", fontsize=16)
 plt.hist(diabetes_data.pedi)
 plt.show()
 ```
-<img src="/images/pedi_hist.png" title="Histogram of number of entries per pedigree score" width="400" height="auto"/><br>
+<img src="/images/pedi_hist.png" title="Histogram of number of entries per pedigree score" width="500" height="auto"/><br>
 ```
 pedi (Pedigree):
 0.375    1
@@ -426,7 +423,7 @@ plt.xlabel("Age", fontsize=16)
 plt.hist(diabetes_data.age)
 plt.show()
 ```
-<img src="/images/age_hist.png" title="Histogram of number of entries per age" width="400" height="auto"/><br>
+<img src="/images/age_hist.png" title="Histogram of number of entries per age" width="500" height="auto"/><br>
 ```
 age:
 21    63
@@ -493,7 +490,7 @@ ax = sns.barplot(diabetes_data['class'].value_counts().index, diabetes_data['cla
 ax.set(xlabel='Class', ylabel='# of entries')
 plt.show()
 ```
-<img src="/images/class_bar.png" title="Number of positives vs negatives" width="400" height="auto"/><br>
+<img src="/images/class_bar.png" title="Number of positives vs negatives" width="500" height="auto"/><br>
 ```
 class:
 0    500
@@ -558,14 +555,66 @@ class
 ## 6) Feature Engineering
 
 ### 6.1 Exploration of new features
-
+No new features created.
 
 ### 6.2 Split into Training and Testing Data
+```python
+# define x, y
+X = diabetes_data.drop(['class'], axis = 1)
+y = diabetes_data['class']
 
+# split into train test
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 7)
+```
 
-## 7) Evaluate Model Performance
+## 7) Model Building
 
-### 7.1 Data Preprocessing for Model
+### 7.1 Naives Bayes
+```python
+gnb = GaussianNB()
+cv = cross_val_score(gnb, X_train, y_train, cv=5)
+print(cv)
+print(cv.mean())
+```
+```
+[0.7398374  0.77235772 0.70731707 0.80487805 0.75409836]
+0.7556977209116353
+```
 
+### 7.2 Logistic Regression
+```python
+lr = LogisticRegression(max_iter = 2000)
+cv = cross_val_score(lr, X_train, y_train,cv=5)
+print(cv)
+print(cv.mean())
+```
+```
+[0.7804878  0.79674797 0.72357724 0.84552846 0.75409836]
+0.7800879648140744
+```
 
-### 7.2 Model Building
+### 7.3 Decision Tree
+```python
+dt = tree.DecisionTreeClassifier(random_state = 1)
+cv = cross_val_score(dt, X_train, y_train, cv=5)
+print(cv)
+print(cv.mean())
+```
+```
+[0.67479675 0.62601626 0.67479675 0.70731707 0.71311475]
+0.6792083166733306
+```
+
+### 7.4 Random Forest
+```python
+rf = RandomForestClassifier(random_state = 1)
+cv = cross_val_score(rf, X_train, y_train, cv=5)
+print(cv)
+print(cv.mean())
+```
+```
+[0.72357724 0.79674797 0.71544715 0.77235772 0.73770492]
+0.7491669998667201
+```
+
+## 8) Hyperparameter Tuning
