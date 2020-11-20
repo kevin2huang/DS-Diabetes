@@ -517,6 +517,27 @@ plt.show()
 <img src="/images/pairplot.png" title="Pairplot of Features" width="auto" height="auto"/><br>
 
 
+### 5.9 Pivot Table
+```python
+pivot_table1 = pd.pivot_table(diabetes_data, index = 'class', values = ['preg', 'plas', 'pres', 'skin'])
+print(pivot_table1)
+
+pivot_table2 = pd.pivot_table(diabetes_data, index = 'class', values = ['test', 'mass', 'pedi', 'age'])
+print(pivot_table2)
+```
+```
+             plas      preg       pres       skin
+class                                            
+0      109.980000  3.298000  68.184000  19.664000
+1      141.257463  4.865672  70.824627  22.164179
+
+
+             age       mass      pedi        test
+class                                            
+0      31.190000  30.304200  0.429734   68.792000
+1      37.067164  35.142537  0.550500  100.335821
+```
+
 ## 6) Feature Engineering
 
 ### 6.1 Exploration of new features
