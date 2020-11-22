@@ -42,40 +42,69 @@ def remove_outliers_iqr(df):
 
 
 #** PREG **#
-sns.boxplot(x=diabetes_data['preg'])
-plt.show()
+# sns.boxplot(x=diabetes_data['preg'])
+# plt.show()
+
+# calculate IQR score and remove outliers
+diabetes_data['preg'] = remove_outliers_iqr(diabetes_data['preg'])
 
 
 #** PLAS **#
-sns.boxplot(x=diabetes_data['plas'])
-plt.show()
+# sns.boxplot(x=diabetes_data['plas'])
+# plt.show()
+
+# calculate IQR score and remove outliers
+diabetes_data['plas'] = remove_outliers_iqr(diabetes_data['plas'])
 
 
-#** SKIN **#
-sns.boxplot(x=diabetes_data['skin'])
-plt.show()
+# #** SKIN **#
+# sns.boxplot(x=diabetes_data['skin'])
+# plt.show()
+
+# calculate IQR score and remove outliers
+diabetes_data['skin'] = remove_outliers_iqr(diabetes_data['skin'])
 
 
-#** TEST **#
-sns.boxplot(x=diabetes_data['test'])
-plt.show()
+# #** TEST **#
+# sns.boxplot(x=diabetes_data['test'])
+# plt.show()
+
+# calculate IQR score and remove outliers
+diabetes_data['test'] = remove_outliers_iqr(diabetes_data['test'])
 
 
-#** MASS **#
-sns.boxplot(x=diabetes_data['mass'])
-plt.show()
+# #** MASS **#
+# sns.boxplot(x=diabetes_data['mass'])
+# plt.show()
+
+# calculate IQR score and remove outliers
+diabetes_data['mass'] = remove_outliers_iqr(diabetes_data['mass'])
 
 
-#** PEDI **#
-sns.boxplot(x=diabetes_data['pedi'])
-plt.show()
+# #** PEDI **#
+# sns.boxplot(x=diabetes_data['pedi'])
+# plt.show()
+
+# calculate IQR score and remove outliers
+diabetes_data['pedi'] = remove_outliers_iqr(diabetes_data['pedi'])
 
 
-#** AGE **#
-sns.boxplot(x=diabetes_data['age'])
-plt.show()
+# #** AGE **#
+# sns.boxplot(x=diabetes_data['age'])
+# plt.show()
+
+# calculate IQR score and remove outliers
+diabetes_data['age'] = remove_outliers_iqr(diabetes_data['age'])
 
 
+# ***************************************** Drop null data *****************************************
+
+# drop all null rows
+diabetes_data = diabetes_data.dropna()
+
+print(diabetes_data.info())
 
 
-# diabetes_data.to_csv('Data set/diabetes_data_cleaned.csv',index = False)
+# ***************************************** Output to CSV *******************************************
+
+diabetes_data.to_csv('Data set/diabetes_data_cleaned.csv',index = False)
