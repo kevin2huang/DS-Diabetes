@@ -105,6 +105,20 @@ diabetes_data = diabetes_data.dropna()
 print(diabetes_data.info())
 
 
+# ***************************************  Convert object data type **************************************
+
+diabetes_data['preg'] = diabetes_data['preg'].astype(int)
+diabetes_data['plas'] = diabetes_data['plas'].astype(int)
+diabetes_data['pres'] = diabetes_data['pres'].astype(int)
+diabetes_data['skin'] = diabetes_data['skin'].astype(int)
+diabetes_data['test'] = diabetes_data['test'].astype(int)
+diabetes_data['age'] = diabetes_data['age'].astype(int)
+diabetes_data['class'] = diabetes_data['class'].astype(int)
+
+diabetes_data['mass'] = diabetes_data['mass'].astype(float)
+diabetes_data['pedi'] = diabetes_data['pedi'].astype(float)
+
+
 # ***************************************** Output to CSV *******************************************
 
 diabetes_data.to_csv('Data set/diabetes_data_cleaned.csv',index = False)
