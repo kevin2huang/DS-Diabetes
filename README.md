@@ -27,8 +27,6 @@ The following code is written in Python 3.7.7. Below is the list of libraries us
 ```python
 import numpy as np 
 import pandas as pd
-import matplotlib
-import sklearn
 ```
 
 ### 3.2 Load Data Modeling Libraries
@@ -39,21 +37,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 #Common Model Algorithms
-from sklearn.model_selection import cross_val_score
-from sklearn.naive_bayes import GaussianNB
-from sklearn.linear_model import LogisticRegression, LinearRegression
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
+from sklearn.linear_model import LogisticRegression
 from sklearn import tree
-from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import VotingClassifier
-from sklearn.svm import SVC
-from xgboost import XGBClassifier
 
 #Common Model Helpers
-from sklearn.preprocessing import StandardScaler
-from sklearn import model_selection
-from sklearn import metrics
-from sklearn.metrics import accuracy_score, mean_absolute_error, r2_score
+from sklearn.metrics import accuracy_score, mean_squared_error, confusion_matrix
 ```
 
 ### 3.3 Data dictionary
