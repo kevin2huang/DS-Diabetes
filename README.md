@@ -1,4 +1,4 @@
-# Store Prediction
+# Diabetes Prediction
 
 ## Technology and Resources Used
 
@@ -343,21 +343,16 @@ diabetes_data = pd.read_csv("Data set/diabetes_data_cleaned.csv", encoding= 'uni
 ### 5.0 Helper method
 ```python
 def plotHist(xlabel, title, column):
-
-    # Remove the plot frame lines. They are unnecessary chartjunk.  
     fig, ax = plt.subplots(1, 1, 
                            figsize =(10, 7),  
                            tight_layout = True)
 
-    # hide top and right spines for aesthetics
     ax.spines["top"].set_visible(False)  
     ax.spines["right"].set_visible(False)
 
-    # Make sure axis ticks are large enough to be easily read.
     plt.xticks(fontsize=14)  
     plt.yticks(fontsize=14)
 
-    # set labels and titles
     plt.xlabel(xlabel, fontsize=16)  
     plt.ylabel("# of entries", fontsize=16)
     plt.title(title, fontsize=20)
@@ -367,18 +362,14 @@ def plotHist(xlabel, title, column):
 ```
 ```python
 def plotBar(xlabel, title, column):
-
     ax = sns.barplot(column.value_counts().index, column.value_counts())
 
-    # hide top and right spines for aesthetics
     ax.spines["top"].set_visible(False)  
     ax.spines["right"].set_visible(False)
 
-    # Make sure axis ticks are large enough to be easily read.
     plt.xticks(fontsize=14)  
     plt.yticks(fontsize=14)
 
-    # set labels and titles
     plt.xlabel(xlabel, fontsize=16)  
     plt.ylabel("# of entries", fontsize=16)
     plt.title(title, fontsize=20)
@@ -818,7 +809,7 @@ plt.show()
 print("Gini max accuracy:", max(gini_acc_scores))
 print("Entropy max accuracy:", max(entropy_acc_scores))
 ```
-<img src="/images/dt_accuracy_plot.png" title="Accuracy Score for Multiple Depths" width="500" height="auto"/><br>
+<img src="/images/dt_accuracy_plot.png" title="Accuracy Score for Multiple Depths" width="600" height="auto"/><br>
 ```
 Gini max accuracy: 0.762962962962963
 Entropy max accuracy: 0.762962962962963
@@ -859,7 +850,7 @@ ylab = plt.ylabel('Accuracy', fontsize = 20)
 title = plt.title('(Random Forest) Accuracy vs Depth of Trees', fontsize = 25)
 plt.show()
 ```
-<img src="/images/rf_accuracy_plot.png" title="(Random Forest) Accuracy vs Depth of Trees" width="500" height="auto"/><br>
+<img src="/images/rf_accuracy_plot.png" title="(Random Forest) Accuracy vs Depth of Trees" width="600" height="auto"/><br>
 ```python
 rf = RandomForestClassifier(n_estimators=25, max_depth=acc_scores.index(max(acc_scores))+1, random_state=1)
 rf.fit(X_train,y_train)
