@@ -135,6 +135,7 @@ max      2.420000   81.000000    1.000000
 ## 4) Data Cleaning
 
 ### 4.1 Correcting outliers
+I used the IQR (Inter Quartile Range) method to detect and remove outliers and plotted boxplots to get a visual understanding of the outliers.
 
 #### 4.1.0 IQR method
 ```python
@@ -331,6 +332,7 @@ diabetes_data = pd.read_csv("Data set/diabetes_data_cleaned.csv", encoding= 'uni
 ```
 
 ### 5.0 Helper method
+I created a few helper methods to plot the visualizations.
 ```python
 def plotHist(xlabel, title, column):
     fig, ax = plt.subplots(1, 1, 
@@ -684,6 +686,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, rando
 ```
 
 ## 7) Model Building
+Train the models and use cross validation score for the accuracy.
 
 ### 7.1 Logistic Regression
 ```python
