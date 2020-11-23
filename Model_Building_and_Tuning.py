@@ -1,11 +1,11 @@
 import numpy as np 
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn import tree
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, mean_squared_error, r2_score
+from sklearn.metrics import accuracy_score, mean_squared_error, confusion_matrix
 
 # read data set
 diabetes_data = pd.read_csv("Data set/diabetes_data_cleaned.csv", encoding= 'unicode_escape')
@@ -43,9 +43,24 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, rando
 
 # ****************************************** Hyperparameter Tuning *******************************************
 
-
 # Logistic Regression
+lr = LogisticRegression()
+param_grid = {'max_iter' : [2000],
+              'penalty' : ['l1', 'l2'],
+              'C' : np.logspace(-4, 4, 20),
+              'solver' : ['liblinear']}
 
+clf_lr = GridSearchCV(lr, param_grid = param_grid, cv = 5, verbose = True, n_jobs = -1)
+best_clf_lr = clf_lr.fit(X_train, y_train)
+
+print('Best Score: ' + str(best_clf_lr.best_score_))
+print('Best Parameters: ' + str(best_clf_lr.best_params_))
+
+# calculate accuracy
+y_predict = best_clf_lr.predict(X_test)
+
+print("Confusion Matrix:\n", confusion_matrix(y_test, y_predict))
+print("Accuracy:", accuracy_score(y_test, y_predict))
 
 
 # Decision Tree
@@ -93,32 +108,32 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, rando
 
 
 # RandomForest
-acc_scores = []              
-depth = np.arange(1, 30)
+# acc_scores = []              
+# depth = np.arange(1, 30)
 
-for i in depth:
+# for i in depth:
 
-    rf = RandomForestClassifier(n_estimators=25, max_depth=i, random_state=1)
-    rf.fit(X_train,y_train)
+#     rf = RandomForestClassifier(n_estimators=25, max_depth=i, random_state=1)
+#     rf.fit(X_train,y_train)
 
-    y_predict = rf.predict(X_test)
+#     y_predict = rf.predict(X_test)
 
-    acc_scores.append(accuracy_score(y_test, y_predict)) 
-
-
-figsize = plt.figure(figsize = (12,8))
-plot = plt.plot(depth, acc_scores, 'r')
-plt.xticks(fontsize=14)
-plt.yticks(fontsize=14)
-xlab = plt.xlabel('Depth of the trees', fontsize = 20)
-ylab = plt.ylabel('Accuracy', fontsize = 20)
-title = plt.title('(Random Forest) Accuracy vs Depth of Trees', fontsize = 25)
-plt.show()
+#     acc_scores.append(accuracy_score(y_test, y_predict)) 
 
 
-rf = RandomForestClassifier(n_estimators=25, max_depth=acc_scores.index(max(acc_scores))+1, random_state=1)
-rf.fit(X_train,y_train)
+# figsize = plt.figure(figsize = (12,8))
+# plot = plt.plot(depth, acc_scores, 'r')
+# plt.xticks(fontsize=14)
+# plt.yticks(fontsize=14)
+# xlab = plt.xlabel('Depth of the trees', fontsize = 20)
+# ylab = plt.ylabel('Accuracy', fontsize = 20)
+# title = plt.title('(Random Forest) Accuracy vs Depth of Trees', fontsize = 25)
+# plt.show()
 
-y_predict = rf.predict(X_test)
 
-print("Accuracy:", accuracy_score(y_test, y_predict))
+# rf = RandomForestClassifier(n_estimators=25, max_depth=acc_scores.index(max(acc_scores))+1, random_state=1)
+# rf.fit(X_train,y_train)
+
+# y_predict = rf.predict(X_test)
+
+# print("Accuracy:", accuracy_score(y_test, y_predict))
