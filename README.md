@@ -416,7 +416,7 @@ def correlation_heatmap(df):
 print('preg (Pregnancies):\n', diabetes_data.preg.value_counts(sort=False))
 plotHist("Pregnancies", "Histogram of number of entries per number of pregnancies", diabetes_data.preg) 
 ```
-<img src="/images/preg_hist.png" title="Histogram of number of entries per pregnancy count" width="400" height="auto"/><br>
+<img src="/images/preg_hist.png" title="Histogram of number of entries per pregnancy count" width="500" height="auto"/><br>
 ```
 preg (Pregnancies):
 0      97
@@ -704,19 +704,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, rando
 
 ## 7) Model Building
 
-### 7.1 Naives Bayes
-```python
-gnb = GaussianNB()
-cv = cross_val_score(gnb, X_train, y_train, cv=5)
-print(cv)
-print(cv.mean())
-```
-```
-[0.7962963  0.7962963  0.75       0.76635514 0.76635514]
-0.7750605745932848
-```
-
-### 7.2 Logistic Regression
+### 7.1 Logistic Regression
 ```python
 lr = LogisticRegression(max_iter = 2000)
 cv = cross_val_score(lr, X_train, y_train,cv=5)
@@ -728,7 +716,7 @@ print(cv.mean())
 0.7823814468674282
 ```
 
-### 7.3 Decision Tree
+### 7.2 Decision Tree
 ```python
 dt = tree.DecisionTreeClassifier(random_state = 1)
 cv = cross_val_score(dt, X_train, y_train, cv=5)
@@ -740,7 +728,7 @@ print(cv.mean())
 0.6726722049151955
 ```
 
-### 7.4 Random Forest
+### 7.3 Random Forest
 ```python
 rf = RandomForestClassifier(random_state = 1)
 cv = cross_val_score(rf, X_train, y_train, cv=5)
@@ -753,3 +741,95 @@ print(cv.mean())
 ```
 
 ## 8) Hyperparameter Tuning
+
+### 8.2 Decision Tree
+* `criterion` : optional (default=”gini”) or Choose attribute selection measure: This parameter allows us to use the different attribute selection measure. Supported criteria are “gini” for the Gini index and “entropy” for the information gain.
+
+* `max_depth` : int or None, optional (default=None) or Maximum Depth of a Tree: The maximum depth of the tree. If None, then nodes are expanded until all the leaves contain less than min_samples_split samples. The higher value of maximum depth causes overfitting, and a lower value causes underfitting (Source).
+
+```python
+gini_acc_scores = []
+entropy_acc_scores = []
+
+criterions = ["gini", "entropy"]
+
+for criterion in criterions:
+	for depth in range(25):
+	    dt = tree.DecisionTreeClassifier(criterion=criterion, max_depth = depth+1, random_state=depth)
+	    model = dt.fit(X_train,y_train)
+	    
+	    y_predict = dt.predict(X_test)
+
+	    if criterion == "gini":
+	    	gini_acc_scores.append(accuracy_score(y_test, y_predict))
+	    else:
+	    	entropy_acc_scores.append(accuracy_score(y_test, y_predict))
+```
+```python
+figuresize = plt.figure(figsize=(12,8))
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+EntropyAcc = plt.plot(np.arange(25)+1, entropy_acc_scores, '--bo')   
+GiniAcc = plt.plot(np.arange(25)+1, gini_acc_scores, '--ro')
+legend = plt.legend(['Entropy', 'Gini'], loc ='lower right',  fontsize=15)
+title = plt.title('Accuracy Score for Multiple Depths', fontsize=25)
+xlab = plt.xlabel('Depth of Tree', fontsize=20)
+ylab = plt.ylabel('Accuracy Score', fontsize=20)
+
+plt.show()
+
+print("Gini max accuracy:", max(gini_acc_scores))
+print("Entropy max accuracy:", max(entropy_acc_scores))
+```
+<img src="/images/dt_accuracy_plot.png" title="Accuracy Score for Multiple Depths" width="500" height="auto"/><br>
+```
+Gini max accuracy: 0.762962962962963
+Entropy max accuracy: 0.762962962962963
+```
+```python
+dt = tree.DecisionTreeClassifier(max_depth = 1, random_state = 1)
+dt = dt.fit(X_train, y_train)
+y_predict = dt.predict(X_test)
+
+print("Accuracy:", accuracy_score(y_test, y_predict))
+```
+```
+Accuracy: 0.762962962962963
+```
+
+### 8.3 Random Forest
+```python
+acc_scores = []              
+depth = np.arange(1, 30)
+
+for i in depth:
+
+    rf = RandomForestClassifier(n_estimators=25, max_depth=i, random_state=1)
+    rf.fit(X_train,y_train)
+
+    y_predict = rf.predict(X_test)
+
+    acc_scores.append(accuracy_score(y_test, y_predict)) 
+```
+```python
+figsize = plt.figure(figsize = (12,8))
+plot = plt.plot(depth, acc_scores, 'r')
+plt.xticks(fontsize=14)
+plt.yticks(fontsize=14)
+xlab = plt.xlabel('Depth of the trees', fontsize = 20)
+ylab = plt.ylabel('Accuracy', fontsize = 20)
+title = plt.title('(Random Forest) Accuracy vs Depth of Trees', fontsize = 25)
+plt.show()
+```
+<img src="/images/rf_accuracy_plot.png" title="(Random Forest) Accuracy vs Depth of Trees" width="500" height="auto"/><br>
+```python
+rf = RandomForestClassifier(n_estimators=25, max_depth=acc_scores.index(max(acc_scores))+1, random_state=1)
+rf.fit(X_train,y_train)
+
+y_predict = rf.predict(X_test)
+
+print("Accuracy:", accuracy_score(y_test, y_predict))
+```
+```
+Accuracy: 0.7851851851851852
+```
