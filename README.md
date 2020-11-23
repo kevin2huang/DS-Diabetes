@@ -32,17 +32,17 @@ import pandas as pd
 ### 3.2 Load Data Modeling Libraries
 These are the most common machine learning and data visualization libraries.
 ```python
-#Visualization
+# Visualization
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-#Common Model Algorithms
+# Model Algorithms
 from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn import tree
 from sklearn.ensemble import RandomForestClassifier
 
-#Common Model Helpers
+# Model Helpers
 from sklearn.metrics import accuracy_score, mean_squared_error, confusion_matrix
 ```
 
