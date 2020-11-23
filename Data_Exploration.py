@@ -11,7 +11,6 @@ diabetes_data = pd.read_csv("Data set/diabetes_data_cleaned.csv", encoding= 'uni
 # ******************************************* Helper methos *******************************************
 
 def plotHist(xlabel, title, column):
-
     # Remove the plot frame lines. They are unnecessary chartjunk.  
     fig, ax = plt.subplots(1, 1, 
                            figsize =(10, 7),  
@@ -35,7 +34,6 @@ def plotHist(xlabel, title, column):
 
 
 def plotBar(xlabel, title, column):
-
     ax = sns.barplot(column.value_counts().index, column.value_counts())
 
     # hide top and right spines for aesthetics
