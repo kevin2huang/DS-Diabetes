@@ -742,6 +742,43 @@ print(cv.mean())
 
 ## 8) Hyperparameter Tuning
 
+### 8.1 Logistic Regression
+* `C` : float, (default=1.0). Inverse of regularization strength; must be a positive float. Like in support vector machines, smaller values specify stronger regularization.
+
+```python
+lr = LogisticRegression()
+param_grid = {'max_iter' : [2000],
+              'penalty' : ['l1', 'l2'],
+              'C' : np.logspace(-4, 4, 20),
+              'solver' : ['liblinear']}
+
+clf_lr = GridSearchCV(lr, param_grid = param_grid, cv = 5, verbose = True, n_jobs = -1)
+best_clf_lr = clf_lr.fit(X_train, y_train)
+
+print('Best Score: ' + str(best_clf_lr.best_score_))
+print('Best Parameters: ' + str(best_clf_lr.best_params_))
+```
+```
+Fitting 5 folds for each of 40 candidates, totalling 200 fits
+[Parallel(n_jobs=-1)]: Using backend LokyBackend with 4 concurrent workers.
+[Parallel(n_jobs=-1)]: Done  88 tasks      | elapsed:    1.3s
+[Parallel(n_jobs=-1)]: Done 200 out of 200 | elapsed:    1.5s finished
+Best Score: 0.7916753201799931
+Best Parameters: {'C': 0.615848211066026, 'max_iter': 2000, 'penalty': 'l1', 'solver': 'liblinear'}
+```
+```python
+y_predict = best_clf_lr.predict(X_test)
+
+print("Confusion Matrix:\n", confusion_matrix(y_test, y_predict))
+print("Accuracy:", accuracy_score(y_test, y_predict))
+```
+```
+Confusion Matrix:
+ [[83  9]
+ [20 23]]
+Accuracy: 0.7851851851851852
+```
+
 ### 8.2 Decision Tree
 * `criterion` : optional (default=”gini”) or Choose attribute selection measure: This parameter allows us to use the different attribute selection measure. Supported criteria are “gini” for the Gini index and “entropy” for the information gain.
 
@@ -798,6 +835,7 @@ Accuracy: 0.762962962962963
 ```
 
 ### 8.3 Random Forest
+* `max_depth` : int or None, optional (default=None) or Maximum Depth of a Tree: The maximum depth of the tree. If None, then nodes are expanded until all the leaves contain less than min_samples_split samples. The higher value of maximum depth causes overfitting, and a lower value causes underfitting (Source).
 ```python
 acc_scores = []              
 depth = np.arange(1, 30)
