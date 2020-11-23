@@ -8,9 +8,8 @@ import datetime as dt
 # read data set
 diabetes_data = pd.read_csv("Data set/diabetes.csv", encoding= 'unicode_escape')
 
-# Index(['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class'], dtype='object')
 
-# ****************************************** Remove Outliers *******************************************
+# ****************************************** Helper methods *******************************************
 
 # helper methods
 def remove_outliers_z_score(df):
@@ -40,58 +39,59 @@ def remove_outliers_iqr(df):
 	return dataf[~((dataf < lower_bound) | (dataf > upper_bound)).any(axis=1)]
 
 
+# ****************************************** Remove Outliers *******************************************
 
 #** PREG **#
-# sns.boxplot(x=diabetes_data['preg'])
-# plt.show()
+sns.boxplot(x=diabetes_data['preg'])
+plt.show()
 
 # calculate IQR score and remove outliers
 diabetes_data['preg'] = remove_outliers_iqr(diabetes_data['preg'])
 
 
 #** PLAS **#
-# sns.boxplot(x=diabetes_data['plas'])
-# plt.show()
+sns.boxplot(x=diabetes_data['plas'])
+plt.show()
 
 # calculate IQR score and remove outliers
 diabetes_data['plas'] = remove_outliers_iqr(diabetes_data['plas'])
 
 
 # #** SKIN **#
-# sns.boxplot(x=diabetes_data['skin'])
-# plt.show()
+sns.boxplot(x=diabetes_data['skin'])
+plt.show()
 
 # calculate IQR score and remove outliers
 diabetes_data['skin'] = remove_outliers_iqr(diabetes_data['skin'])
 
 
 # #** TEST **#
-# sns.boxplot(x=diabetes_data['test'])
-# plt.show()
+sns.boxplot(x=diabetes_data['test'])
+plt.show()
 
 # calculate IQR score and remove outliers
 diabetes_data['test'] = remove_outliers_iqr(diabetes_data['test'])
 
 
 # #** MASS **#
-# sns.boxplot(x=diabetes_data['mass'])
-# plt.show()
+sns.boxplot(x=diabetes_data['mass'])
+plt.show()
 
 # calculate IQR score and remove outliers
 diabetes_data['mass'] = remove_outliers_iqr(diabetes_data['mass'])
 
 
 # #** PEDI **#
-# sns.boxplot(x=diabetes_data['pedi'])
-# plt.show()
+sns.boxplot(x=diabetes_data['pedi'])
+plt.show()
 
 # calculate IQR score and remove outliers
 diabetes_data['pedi'] = remove_outliers_iqr(diabetes_data['pedi'])
 
 
 # #** AGE **#
-# sns.boxplot(x=diabetes_data['age'])
-# plt.show()
+sns.boxplot(x=diabetes_data['age'])
+plt.show()
 
 # calculate IQR score and remove outliers
 diabetes_data['age'] = remove_outliers_iqr(diabetes_data['age'])
